@@ -30,10 +30,7 @@ return {
 		}
 
 		dashboard.section.buttons.val = {
-			dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-			dashboard.button("SPC f f", "  Find file"),
-			dashboard.button("SPC s s", "  NeoBee config", "<Cmd>Neotree reveal ~/.config/nvim<CR>"),
-			dashboard.button("SPC q q", "  Quit", "<Cmd>qa<CR>"),
+		--	dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
 		}
 		local handle = io.popen('fortune')
 		local fortune = handle:read("*a")

@@ -4,10 +4,6 @@ return {
 	lazy = false,
 	version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
 	opts = {
-		provider = "openai",
-		openai = {
-			model = "gpt-4o-mini"
-		}
 		-- add any opts here
 	},
 	-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -41,7 +37,7 @@ return {
 		{
 			-- Make sure to set this up properly if you have lazy=true
 			'MeanderingProgrammer/render-markdown.nvim',
-		 	opts = {
+			opts = {
 				file_types = { "markdown", "Avante" },
 			},
 			ft = { "markdown", "Avante" },

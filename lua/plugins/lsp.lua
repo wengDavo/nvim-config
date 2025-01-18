@@ -1,13 +1,13 @@
 -- language servive providers
 return {
-	-- lsp package manager
+	-- 1. lsp package manager
 	{
 		"williamboman/mason.nvim",
 		config = function()
 			require("mason").setup()
 		end,
 	},
-	-- lsp language servers to be installed by default
+	-- 2. language servers to be installed by default by mason
 	{
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
@@ -22,12 +22,13 @@ return {
 					"angularls",
 					"cssls",
 					"vuels",
-					"ts_ls"
+					"ts_ls",
+					"solidity_ls_nomicfoundation",
 				},
 			})
 		end,
 	},
-	-- Install server and enable communication between neovim and lsp and vice versa
+	--3. nvim lsp client config for various lsp servers
 	{
 		"neovim/nvim-lspconfig",
 		lazy = false,
@@ -43,24 +44,35 @@ return {
 				"angularls",
 				"cssls",
 				"vuels",
-				"ts_ls"
+				"ts_ls",
 			}
 
-			lspconfig.lua_ls.setup {}
-			lspconfig.eslint.setup {}
-			lspconfig.html.setup {}
-			lspconfig.pyright.setup {}
-			lspconfig.tailwindcss.setup {}
-			lspconfig.angularls.setup {}
-			lspconfig.cssls.setup {}
-			lspconfig.vuels.setup {}
-			lspconfig.ts_ls.setup {}
+			-- Function to setup each LSP server
+			local function setup_servers()
+				for _, lsp in ipairs(servers) do
+					local success, server_config = pcall(function()
+						return require("lspconfig")[lsp]
+					end)
 
-			for _, lsp in ipairs(servers) do
-				lspconfig[lsp].setup({
-					capabilities = capabilities,
-				})
+					if success and server_config then
+						server_config.setup({
+							capabilities = capabilities,
+						})
+					else
+						vim.notify("LSP server '" .. lsp .. "' not found", vim.log.levels.ERROR)
+					end
+				end
 			end
+
+			-- Initialize servers
+			setup_servers()
+
+			lspconfig["solidity"].setup({
+				capabilities = capabilities,
+				cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
+				filetypes = { "solidity" },
+				single_file_support = true,
+			})
 
 			--
 			vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
