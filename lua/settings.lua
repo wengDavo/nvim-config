@@ -38,3 +38,5 @@ vim.opt.hlsearch = true
 
 -- vim.opt.showmatch = true -- When a bracket is inserted, briefly jump to the matching one.
 -- o.mouse -= "a -- Disable the use of the mouse. "a" you can use on all modes
+
+vim.opt_local.conceallevel = 2 -- this option controls how hidden or "concealed" text is displayed. for obsidian nvim 

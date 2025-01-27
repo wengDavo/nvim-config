@@ -32,14 +32,9 @@ return {
 		dashboard.section.buttons.val = {
 		--	dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
 		}
-		local handle = io.popen('fortune')
-		local fortune = handle:read("*a")
-		handle:close()
-		dashboard.section.footer.val = fortune
-
 		dashboard.config.opts.noautocmd = true
 
-		vim.cmd [[autocmd User AlphaReady echo 'ready']]
+		vim.cmd [[autocmd User AlphaReady echo 'Weng It Is Ready']]
 
 		alpha.setup(dashboard.config)
 	end
